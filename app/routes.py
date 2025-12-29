@@ -8,9 +8,7 @@ router = APIRouter()
 
 @router.post("/{emisor}/consulta/ruc")
 def consulta_ruc(emisor: str, data: RucRequest):
-
-    emisor = None 
-
+    
     resp = forward(
         "/api/consulta/ruc",
         data.model_dump(),  
@@ -26,10 +24,6 @@ def consulta_ruc(emisor: str, data: RucRequest):
 @router.post("/{emisor}/consulta/de/xml")
 def consulta_xml(emisor: str, data: CdcRequest):
 
-
-    emisor = None 
-
-
     resp = forward(
         "/api/consulta/de/xml",
         data.model_dump(),
@@ -41,3 +35,6 @@ def consulta_xml(emisor: str, data: CdcRequest):
         status_code=resp.status_code,
         media_type="application/xml"
     )
+
+
+
