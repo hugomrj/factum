@@ -24,7 +24,6 @@ def consulta_ruc(
     data: RucRequest,
     token: str | None = Header(default=None)
 ):
-    emisor = None
 
     resp = forward(
         "/api/consulta/ruc",
