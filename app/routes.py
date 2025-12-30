@@ -6,6 +6,15 @@ from app.services.proxy import forward
 router = APIRouter()
 
 
+@router.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "service": "factum",
+        "alive": True
+    }
+
+
 @router.post("/{emisor}/consulta/ruc")
 def consulta_ruc(emisor: str, data: RucRequest):
     
