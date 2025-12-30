@@ -49,15 +49,13 @@ def consulta_xml(emisor: str, data: CdcRequest):
 @router.post("/{emisor}/consulta/lote")
 def consulta_lote(
     emisor: str,
-    data: LoteRequest,
-    token: str | None = Header(default=None)
+    data: LoteRequest
 ):
 
     resp = forward(
         "/api/consulta/lote",
         data.model_dump(),
-        emisor,
-        token
+        emisor
     )
 
     return resp.json()
