@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Header, Response, Request
 from app.database import get_db
-from app.schemas import CdcRequest, LoteRequest, RucRequest
+from app.schemas import CancelarRequest, CdcRequest, LoteRequest, RucRequest
 from app.services.proxy import forward
 from fastapi.responses import JSONResponse
 from fastapi import Body
@@ -16,6 +16,7 @@ def health():
         "service": "factum",
         "alive": True
     }
+
 
 
 @router.post("/{emisor}/consulta/ruc")
@@ -97,3 +98,22 @@ async def factura_async(
         content=resp.json(),
         status_code=resp.status_code
     )
+
+
+
+
+
+@router.post("/{emisor}/evento/cancelar")
+def cancelar_evento(
+    emisor: str,
+    data: CancelarRequest,
+    token: str | None = Header(default=None)
+):
+    resp = forward(
+        "/evento/cancelar",
+        data.model_dump(),
+        emisor,
+        token
+    )
+
+    return resp.json()
