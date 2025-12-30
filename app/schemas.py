@@ -8,3 +8,8 @@ class RucRequest(BaseModel):
 
 class CdcRequest(BaseModel):
     cdc: str
+
+
+
+class LoteRequest(BaseModel):
+    lote: str

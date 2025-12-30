@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Header, Response
 from app.database import get_db
-from app.schemas import CdcRequest, RucRequest
+from app.schemas import CdcRequest, LoteRequest, RucRequest
 from app.services.proxy import forward
 
 router = APIRouter()
@@ -28,8 +28,6 @@ def consulta_ruc(emisor: str, data: RucRequest):
 
 
 
-
-
 @router.post("/{emisor}/consulta/de/xml")
 def consulta_xml(emisor: str, data: CdcRequest):
 
@@ -46,4 +44,21 @@ def consulta_xml(emisor: str, data: CdcRequest):
     )
 
 
+
+
+@router.post("/{emisor}/consulta/lote")
+def consulta_lote(
+    emisor: str,
+    data: LoteRequest,
+    token: str | None = Header(default=None)
+):
+
+    resp = forward(
+        "/api/consulta/lote",
+        data.model_dump(),
+        emisor,
+        token
+    )
+
+    return resp.json()
 
