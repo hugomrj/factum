@@ -19,25 +19,36 @@ def health():
 
 
 @router.post("/{emisor}/consulta/ruc")
-def consulta_ruc(emisor: str, data: RucRequest):
-    
+def consulta_ruc(
+    emisor: str,
+    data: RucRequest,
+    token: str | None = Header(default=None)
+):
+    emisor = None
+
     resp = forward(
         "/api/consulta/ruc",
-        data.model_dump(),  
-        emisor
+        data.model_dump(),
+        emisor,
+        token
     )
 
     return resp.json()
 
 
 
-@router.post("/{emisor}/consulta/de/xml")
-def consulta_xml(emisor: str, data: CdcRequest):
 
+@router.post("/{emisor}/consulta/de/xml")
+def consulta_xml(
+    emisor: str,
+    data: CdcRequest,
+    token: str | None = Header(default=None)
+):
     resp = forward(
         "/api/consulta/de/xml",
         data.model_dump(),
-        emisor
+        emisor,
+        token
     )
 
     return Response(
@@ -49,19 +60,22 @@ def consulta_xml(emisor: str, data: CdcRequest):
 
 
 
+
 @router.post("/{emisor}/consulta/lote")
 def consulta_lote(
     emisor: str,
-    data: LoteRequest
+    data: LoteRequest,
+    token: str | None = Header(default=None)
 ):
-
     resp = forward(
         "/api/consulta/lote",
         data.model_dump(),
-        emisor
+        emisor,
+        token
     )
 
     return resp.json()
+
 
 
 
@@ -73,11 +87,11 @@ async def factura_async(
     body: dict = Body(...),
     token: str | None = Header(default=None)
 ):
-    
     resp = forward(
         "/api/factura/async/recibe",
         body,
-        emisor
+        emisor,
+        token
     )
 
     return JSONResponse(
