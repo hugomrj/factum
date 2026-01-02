@@ -1,6 +1,6 @@
 import os
 from fastapi import FastAPI
-from app.routes import router
+from app.router import router
 
 ROOT_PATH = os.getenv("ROOT_PATH", "")
 
@@ -10,4 +10,3 @@ app = FastAPI(
 )
 
 app.include_router(router)
-
