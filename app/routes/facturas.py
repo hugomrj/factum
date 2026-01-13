@@ -12,21 +12,25 @@ def factura_async(emisor: str, body: dict = Body(...), token: str | None = Heade
 
 
 
+
+
 @router.post("/{emisor}/factura/xml/generar")
 def generar_factura_xml(
     emisor: str,
     body: dict = Body(...),
-    token: str | None = Header(None)
 ):
+    print("=== FACTURA XML GENERAR ===")
+    print("Emisor (path):", emisor)
+
     resp = forward(
         "POST",
-        "/factura/xml/generar",
+        "/api/factura/xml/generar",
         data=body,
-        token=token
+        token=emisor  # ← se envía como header
     )
 
     return Response(
         content=resp.text,
         status_code=resp.status_code,
-        media_type="text/plain"
+        media_type="application/json"
     )

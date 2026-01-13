@@ -12,7 +12,7 @@ def cancelar_evento(
 ):
     resp = forward(
         "POST",
-        "/evento/cancelar",
+        "/api/evento/cancelar",
         data=data.model_dump(),
         token=token
     )
