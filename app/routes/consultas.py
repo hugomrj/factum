@@ -16,7 +16,7 @@ def consulta_ruc(
     token: str | None = Header(None)
 ):
     headers = {
-        "Emisor": emisor,
+        "emisor": emisor,
         "token": token
     }
 
