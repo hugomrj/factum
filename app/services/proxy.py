@@ -1,7 +1,7 @@
 import requests
 from requests import Response
 from config import API_DESTINO
-º
+
 
 def forward(
     method: str,
