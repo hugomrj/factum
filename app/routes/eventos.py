@@ -10,11 +10,16 @@ def cancelar_evento(
     data: CancelarRequest,
     token: str | None = Header(None)
 ):
+    headers = {
+        "Emisor": emisor,
+        "token": token
+    }
+
     resp = forward(
         "POST",
         "/api/evento/cancelar",
         data=data.model_dump(),
-        token=token
+        headers=headers  
     )
 
     return resp.json()

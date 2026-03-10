@@ -7,11 +7,19 @@ router = APIRouter()
 def health():
     return {"status": "ok", "service": "factum", "alive": True}
 
+
+
 @router.get("/{emisor}/health/sifen/{env}")
 def health_sifen(emisor: str, env: str):
+    headers = {
+        "Emisor": emisor
+    }
+
+    # Enviamos al proxy
     resp = forward(
         "GET",
         f"/api/health/sifen/{env}",
-        params={"emisor": emisor}
+        headers=headers  
     )
+    
     return resp.json()

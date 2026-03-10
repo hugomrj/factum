@@ -5,11 +5,24 @@ from fastapi import Response
 router = APIRouter()
 
 @router.post("/{emisor}/factura/async")
-def factura_async(emisor: str, body: dict = Body(...), token: str | None = Header(None)):
-    resp = forward("POST", "/api/factura/async/recibe", data=body, token=token)
+def factura_async(
+    emisor: str, 
+    body: dict = Body(...), 
+    token: str | None = Header(None)
+):
+    headers = {
+        "Emisor": emisor, 
+        "token": token
+    }    
+
+    resp = forward(
+        "POST", 
+        "/api/factura/async/recibe", 
+        data=body, 
+        headers=headers  
+    )
+    
     return resp.json()
-
-
 
 
 
@@ -22,11 +35,15 @@ def generar_factura_xml(
     print("=== FACTURA XML GENERAR ===")
     print("Emisor (path):", emisor)
 
+    headers = {
+        "Emisor": emisor
+    }
+
     resp = forward(
         "POST",
         "/api/factura/xml/generar",
         data=body,
-        token=emisor  # ← se envía como header
+        headers=headers  
     )
 
     return Response(
