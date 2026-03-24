@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex min-h-screen">
+    
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar w-64 border-r border-gray-100 flex-shrink-0 md:relative md:translate-x-0">
+        <div class="p-6 h-full flex flex-col">
+            <!-- Logo/Título -->
+            <h2 class="text-lg font-semibold tracking-tight mb-10">FacturaSys</h2>
+            
+            <!-- Navegación -->
+            <nav class="flex-1 space-y-1">
+                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-md">Dashboard</a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 hover:text-gray-900 rounded-md">Facturas</a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 hover:text-gray-900 rounded-md">Clientes</a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 hover:text-gray-900 rounded-md">Ajustes</a>
+            </nav>
+            
+            <!-- Usuario -->
+            <div class="border-t border-gray-100 pt-4 mt-4">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 rounded-full bg-gray-200"></div>
+                    <span class="text-sm font-medium">Usuario</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1">
+        
+        <!-- Header Móvil -->
+        <header class="md:hidden flex items-center justify-between p-4 border-b border-gray-100">
+            <button onclick="toggleMenu()" class="p-2 rounded-md hover:bg-gray-100">
+                <!-- Icono Hamburguesa -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+            <span class="font-semibold">FacturaSys</span>
+            <div class="w-10"></div> <!-- Spacer -->
+        </header>
+
+        <!-- Área de Contenido -->
+        <div class="p-6 md:p-10">
+            
+            <div class="max-w-5xl mx-auto">
+                
+                <!-- Título Página -->
+                <div class="mb-12">
+                    <h1 class="text-3xl font-semibold tracking-tight">Dashboard</h1>
+                    <p class="text-gray-400 text-sm mt-1">Resumen del mes</p>
+                </div>
+
+                <!-- Grid Simple (Stats) -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">Facturado</p>
+                        <p class="text-2xl font-semibold mt-1">$12,400</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">Pendiente</p>
+                        <p class="text-2xl font-semibold mt-1 text-red-500">$2,300</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">Clientes</p>
+                        <p class="text-2xl font-semibold mt-1">48</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">Emitidas</p>
+                        <p class="text-2xl font-semibold mt-1">16</p>
+                    </div>
+                </div>
+
+                <!-- Sección Facturas -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium">Recientes</h3>
+                        <button class="text-sm text-gray-500 hover:text-gray-900">Ver todo</button>
+                    </div>
+
+                    <!-- Tabla/Lista Simple -->
+                    <div class="border-t border-gray-100">
+                        <!-- Fila ejemplo -->
+                        <div class="py-4 flex justify-between items-center border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                            <div>
+                                <p class="font-medium text-sm">#FAC-001</p>
+                                <p class="text-xs text-gray-400">Cliente Nombre</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium text-sm">$450.00</p>
+                                <p class="text-xs text-green-600">Pagada</p>
+                            </div>
+                        </div>
+                        <!-- Fila ejemplo 2 -->
+                        <div class="py-4 flex justify-between items-center border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                            <div>
+                                <p class="font-medium text-sm">#FAC-002</p>
+                                <p class="text-xs text-gray-400">Otro Cliente</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium text-sm">$1,200.00</p>
+                                <p class="text-xs text-yellow-600">Pendiente</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Contenedor HTMX para cargar más datos -->
+                        <div id="invoices-list" class="min-h-[100px] flex items-center justify-center text-gray-300 text-sm">
+                            Carga datos aquí...
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+/* web/static/styles.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --accent-color: #0d9488;
+    --accent-hover: #0f766e;
+    --bg-main: #f8fafc;
+    --text-main: #334155;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Inputs: Línea Minimalista --- */
+.input-minimal {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #cbd5e1;
+    border-radius: 0;
+    padding: 0.875rem 0.25rem;
+    width: 100%;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.input-minimal:focus {
+    outline: none;
+    border-bottom-color: var(--accent-color);
+    background-color: rgba(15, 118, 110, 0.03);
+}
+
+/* --- Botones --- */
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px -1px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Sidebar Estructura --- */
+.sidebar {
+    transition: width 0.3s ease, transform 0.3s ease, padding 0.3s ease;
+    width: 16rem; /* w-64 */
+    flex-shrink: 0;
+    border-right: 1px solid #f1f5f9;
+    background-color: white;
+    
+    /* Importante para que el contenido no se desborde al colapsar */
+    overflow: hidden; 
+    white-space: nowrap;
+}
+
+/* LÓGICA BOTÓN ABRIR (Header) */
+/* Por defecto en Desktop, el botón de abrir está oculto porque el sidebar se ve */
+.btn-open-sidebar {
+    display: none; 
+}
+
+/* LÓGICA DESKTOP (min-width: 768px) */
+@media (min-width: 768px) {
+    /* Cuando está colapsado en Desktop */
+    .sidebar.collapsed {
+        width: 0;
+        padding: 0;
+        border-right: none;
+    }
+    
+    /* Mostramos el botón de abrir solo si el sidebar está colapsado */
+    .sidebar.collapsed ~ .main-content .btn-open-sidebar {
+        display: flex;
+    }
+}
+
+/* LÓGICA MÓVIL (max-width: 767px) */
+@media (max-width: 767px) {
+    .sidebar {
+        position: fixed;
+        z-index: 50;
+        height: 100vh;
+        width: 16rem;
+        transform: translateX(-100%); /* Oculto por defecto */
+        box-shadow: 4px 0 6px -1px rgba(0, 0, 0, 0.1);
+        border-right: none;
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    /* En móvil, el botón de abrir siempre debe verse en el header */
+    .btn-open-sidebar {
+        display: flex;
+    }
+    
+    /* Ajuste para el main en móvil */
+    .main-content {
+        width: 100%;
+    }
+}
+
+/* --- Submenu Animación --- */
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.submenu.open {
+    max-height: 200px;
+}
+
+/* HTMX */
+.htmx-swapping { opacity: 0; transition: opacity 200ms; }

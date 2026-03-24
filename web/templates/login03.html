@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex flex-col justify-center items-center px-4" style="background: var(--bg);">
+    <div class="w-full max-w-xs">
+
+        <!-- Marca -->
+        <div class="mb-10 text-center">
+            <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl mb-5" style="background: var(--accent-light);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <rect x="3" y="3" width="6" height="8" rx="1" fill="var(--accent)" opacity=".6"/>
+                    <rect x="11" y="3" width="6" height="5" rx="1" fill="var(--accent)"/>
+                    <rect x="3" y="13" width="14" height="4" rx="1" fill="var(--accent)" opacity=".3"/>
+                </svg>
+            </div>
+            <h1 class="text-xl font-semibold tracking-tight" style="color: var(--text-primary);">Iniciar sesión</h1>
+            <p class="text-sm mt-1" style="color: var(--text-muted);">Factura Electrónica</p>
+        </div>
+
+        <form action="/dashboard" method="GET" class="space-y-7">
+
+            <div>
+                <label class="block text-xs font-medium mb-2" style="color: var(--text-secondary);">Email</label>
+                <input type="email" class="input-minimal" placeholder="tu@email.com" required>
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium mb-2" style="color: var(--text-secondary);">Contraseña</label>
+                <input type="password" class="input-minimal" placeholder="••••••••" required>
+            </div>
+
+            <div class="pt-2">
+                <button type="submit" class="btn-primary w-full">Entrar</button>
+            </div>
+
+            <p class="text-center text-xs" style="color: var(--text-muted);">
+                <a href="#" class="hover:underline" style="color: var(--accent);">¿Olvidaste la contraseña?</a>
+            </p>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
