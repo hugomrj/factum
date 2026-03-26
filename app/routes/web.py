@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Request, Depends, Form, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import APIRouter, Request, Depends, Form, Response  # 1. Agregado Response
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.services.auth import authenticate_user
-from app.core.security import crear_token_acceso
+from app.core.security import create_access_token 
 
 router = APIRouter(tags=["web"])
 templates = Jinja2Templates(directory="web/templates")
@@ -13,41 +13,40 @@ templates = Jinja2Templates(directory="web/templates")
 async def index(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
-
-
 @router.post("/login")
 async def login(
-    request: Request,
-    username: str = Form(...),
-    password: str = Form(...),
+    request: Request, 
+    username: str = Form(...), 
+    password: str = Form(...), 
     db: Session = Depends(get_db)
 ):
-    usuario = authenticate_user(db, username, password)
+    # 1. Validamos con el servicio (Lógica de Negocio)
+    user = authenticate_user(db, username, password)
     
-    if not usuario:
+    if not user:
+        # 2. Si falla, enviamos solo el "pedacito" de HTML del error
         return templates.TemplateResponse(
-            "login.html", 
-            {"request": request, "error": "Usuario o contraseña incorrectos"}
+            "partials/error_message.html", 
+            {"request": request, "type": "error", "message": "Usuario o clave incorrectos"}
         )
     
-    # 1. Creamos el Token con la identidad del usuario
-    token = crear_token_acceso(data={"sub": usuario.username})
+    # 3. Si tiene éxito, generamos el token
+    token = create_access_token(data={"sub": user.username})
     
-    # 2. Preparamos la redirección
-    response = RedirectResponse(url="/dashboard", status_code=303)
+    # 4. Creamos una respuesta vacía (204 No Content) pero con instrucciones para HTMX
+    response = Response(status_code=204)
+    response.headers["HX-Redirect"] = "/dashboard" # <--- HTMX lee esto y redirecciona
     
-    # 3. Guardamos el token en una Cookie segura
-    # httponly=True impide que JavaScript acceda al token (evita XSS)
+    # 5. Guardamos el token en una cookie segura
     response.set_cookie(
         key="access_token", 
         value=f"Bearer {token}", 
         httponly=True, 
-        max_age=86400, # 1 día en segundos
+        max_age=86400,
         samesite="lax"
     )
     
     return response
-
 
 
 @router.get("/dashboard", response_class=HTMLResponse)
