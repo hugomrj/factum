@@ -10,13 +10,53 @@
 </head>
 <body class="bg-white text-gray-900">
 
-    {% block content %}{% endblock %}
+
+    <div id="alert-container" class="fixed top-4 right-4 flex justify-end z-[100] pointer-events-none">
+        <div id="alert-target" class="w-80 md:w-96 pointer-events-auto">
+            </div>
+    </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
 
     <script>
-        // Función simple para toggle del menú en móvil
+        // Sidebar Toggle
         function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('open');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) sidebar.classList.toggle('open');
         }
+    
+        // Cerrar Alerta (Manual)
+        function closeAlert() {
+            const target = document.getElementById('alert-target');
+            if (target) target.innerHTML = '';
+        }
+    
+        // Configurar Auto-cierre (Automático)
+        function setupAutoClose(element) {
+            if (!element) return;
+            setTimeout(() => {
+                if (document.body.contains(element)) {
+                    element.style.opacity = '0';
+                    element.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        if (document.body.contains(element)) closeAlert();
+                    }, 500);
+                }
+            }, 5000);
+        }
+    
+        // Listener de HTMX para capturar el error inyectado vía OOB
+        document.body.addEventListener('htmx:afterSwap', function(evt) {
+            const newError = document.getElementById('error-display');
+            if (newError) {
+                setupAutoClose(newError);
+            }
+        });
     </script>
+
+
 </body>
 </html>

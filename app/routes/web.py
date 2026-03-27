@@ -13,6 +13,7 @@ templates = Jinja2Templates(directory="web/templates")
 async def index(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
+
 @router.post("/login")
 async def login(
     request: Request, 

@@ -1,11 +1,29 @@
-<div id="error-display" 
-     class="flex items-center p-3 mb-6 text-red-800 border border-red-200 rounded-lg bg-red-50" 
-     role="alert">
-    <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-    </svg>
-    <span class="sr-only">Error</span>
-    <div class="text-xs font-medium">
-        {{ message }}
+<div id="alert-target" hx-swap-oob="true">
+    <div id="error-display" 
+         class="flex items-center gap-3 py-2.5 px-4 bg-white border border-gray-200 border-l-4 border-l-red-500 animate-in fade-in duration-300" 
+         role="alert">
+        
+        <div class="flex-shrink-0 text-red-500">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+                <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"></line>
+            </svg>
+        </div>
+        
+        <div class="flex-1 text-left">
+            <p class="text-[13px] font-semibold text-gray-900 leading-tight">
+                {{ message }}
+            </p>
+        </div>
+
+        <button onclick="closeAlert()" 
+            type="button" 
+            class="group p-2 -mr-2 text-gray-400 hover:text-gray-900 cursor-pointer block focus:outline-none"
+            style="cursor: pointer !important; pointer-events: auto;">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+        </button>
     </div>
 </div>
